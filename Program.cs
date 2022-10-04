@@ -5,10 +5,8 @@ using CodeFirstDevelopmentProvinceCity.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var folder = Environment.SpecialFolder.LocalApplicationData;
-var path = Environment.GetFolderPath(folder);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite($"Data Source={System.IO.Path.Join(path, "local.db")}"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)

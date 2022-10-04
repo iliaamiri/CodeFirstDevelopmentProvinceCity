@@ -22,9 +22,9 @@ namespace CodeFirstDevelopmentProvinceCity.Controllers
         // GET: Cities
         public async Task<IActionResult> Index()
         {
-              return _context.Citie != null ? 
-                          View(await _context.Citie.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Citie'  is null.");
+            return _context.Citie != null ?
+                        View(await _context.Citie.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Citie'  is null.");
         }
 
         // GET: Cities/Details/5
@@ -48,6 +48,7 @@ namespace CodeFirstDevelopmentProvinceCity.Controllers
         // GET: Cities/Create
         public IActionResult Create()
         {
+            ViewBag.provinces = GetSelectListItemsProvinces();
             return View();
         }
 
@@ -80,6 +81,7 @@ namespace CodeFirstDevelopmentProvinceCity.Controllers
             {
                 return NotFound();
             }
+            ViewBag.provinces = GetSelectListItemsProvinces();
             return View(city);
         }
 
@@ -150,14 +152,31 @@ namespace CodeFirstDevelopmentProvinceCity.Controllers
             {
                 _context.Citie.Remove(city);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CityExists(int id)
         {
-          return (_context.Citie?.Any(e => e.CityId == id)).GetValueOrDefault();
+            return (_context.Citie?.Any(e => e.CityId == id)).GetValueOrDefault();
+        }
+
+        private List<SelectListItem> GetSelectListItemsProvinces()
+        {
+            List<Province> listOfProvinces = _context.Provinces.ToList();
+
+            List<SelectListItem> list = listOfProvinces.ConvertAll(p =>
+            {
+                return new SelectListItem
+                {
+                    Text = p.ProvinceName,
+                    Value = p.ProvinceCode,
+                    Selected = false
+                };
+            });
+
+            return list;
         }
     }
 }

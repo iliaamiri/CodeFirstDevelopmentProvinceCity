@@ -5,6 +5,11 @@ using CodeFirstDevelopmentProvinceCity.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// var folder = Environment.SpecialFolder.LocalApplicationData;
+// var path = Environment.GetFolderPath(folder);
+// builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//     options.UseSqlite($"Data Source={System.IO.Path.Join(path, "local.db")}"));
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();

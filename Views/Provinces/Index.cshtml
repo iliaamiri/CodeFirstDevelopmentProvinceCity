@@ -1,4 +1,4 @@
-@model IEnumerable<CodeFirstDevelopmentProvinceCity.Models.City>
+@model IEnumerable<CodeFirstDevelopmentProvinceCity.Models.Province>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,13 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CityName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Population)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProvinceCode)
+                @Html.DisplayNameFor(model => model.ProvinceName)
             </th>
             <th></th>
         </tr>
@@ -28,18 +22,12 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CityName)
+                @Html.DisplayFor(modelItem => item.ProvinceName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Population)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProvinceCode)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CityId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CityId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CityId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ProvinceCode">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProvinceCode">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProvinceCode">Delete</a>
             </td>
         </tr>
 }

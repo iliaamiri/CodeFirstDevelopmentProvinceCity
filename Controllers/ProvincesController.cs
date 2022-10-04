@@ -22,27 +22,27 @@ namespace CodeFirstDevelopmentProvinceCity.Controllers
         // GET: Provinces
         public async Task<IActionResult> Index()
         {
-              return _context.Citie != null ? 
-                          View(await _context.Citie.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Citie'  is null.");
+              return _context.Provinces != null ? 
+                          View(await _context.Provinces.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Provinces'  is null.");
         }
 
         // GET: Provinces/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
-            if (id == null || _context.Citie == null)
+            if (id == null || _context.Provinces == null)
             {
                 return NotFound();
             }
 
-            var city = await _context.Citie
-                .FirstOrDefaultAsync(m => m.CityId == id);
-            if (city == null)
+            var province = await _context.Provinces
+                .FirstOrDefaultAsync(m => m.ProvinceCode == id);
+            if (province == null)
             {
                 return NotFound();
             }
 
-            return View(city);
+            return View(province);
         }
 
         // GET: Provinces/Create
@@ -56,31 +56,31 @@ namespace CodeFirstDevelopmentProvinceCity.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CityId,CityName,Population,ProvinceCode")] City city)
+        public async Task<IActionResult> Create([Bind("ProvinceCode,ProvinceName")] Province province)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(city);
+                _context.Add(province);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(city);
+            return View(province);
         }
 
         // GET: Provinces/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
-            if (id == null || _context.Citie == null)
+            if (id == null || _context.Provinces == null)
             {
                 return NotFound();
             }
 
-            var city = await _context.Citie.FindAsync(id);
-            if (city == null)
+            var province = await _context.Provinces.FindAsync(id);
+            if (province == null)
             {
                 return NotFound();
             }
-            return View(city);
+            return View(province);
         }
 
         // POST: Provinces/Edit/5
@@ -88,9 +88,9 @@ namespace CodeFirstDevelopmentProvinceCity.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CityId,CityName,Population,ProvinceCode")] City city)
+        public async Task<IActionResult> Edit(string id, [Bind("ProvinceCode,ProvinceName")] Province province)
         {
-            if (id != city.CityId)
+            if (id != province.ProvinceCode)
             {
                 return NotFound();
             }
@@ -99,12 +99,12 @@ namespace CodeFirstDevelopmentProvinceCity.Controllers
             {
                 try
                 {
-                    _context.Update(city);
+                    _context.Update(province);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CityExists(city.CityId))
+                    if (!ProvinceExists(province.ProvinceCode))
                     {
                         return NotFound();
                     }
@@ -115,49 +115,49 @@ namespace CodeFirstDevelopmentProvinceCity.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(city);
+            return View(province);
         }
 
         // GET: Provinces/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
-            if (id == null || _context.Citie == null)
+            if (id == null || _context.Provinces == null)
             {
                 return NotFound();
             }
 
-            var city = await _context.Citie
-                .FirstOrDefaultAsync(m => m.CityId == id);
-            if (city == null)
+            var province = await _context.Provinces
+                .FirstOrDefaultAsync(m => m.ProvinceCode == id);
+            if (province == null)
             {
                 return NotFound();
             }
 
-            return View(city);
+            return View(province);
         }
 
         // POST: Provinces/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            if (_context.Citie == null)
+            if (_context.Provinces == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Citie'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Provinces'  is null.");
             }
-            var city = await _context.Citie.FindAsync(id);
-            if (city != null)
+            var province = await _context.Provinces.FindAsync(id);
+            if (province != null)
             {
-                _context.Citie.Remove(city);
+                _context.Provinces.Remove(province);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CityExists(int id)
+        private bool ProvinceExists(string id)
         {
-          return (_context.Citie?.Any(e => e.CityId == id)).GetValueOrDefault();
+          return (_context.Provinces?.Any(e => e.ProvinceCode == id)).GetValueOrDefault();
         }
     }
 }
